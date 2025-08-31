@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR Меню Тест</title>
+<style>
+  body { font-family: Arial; background:#1a1a1a; color:white; padding:10px; }
+  h1 { text-align:center; color:#ffcc00; }
+  #call-btn-header { display:block; background:#ff9900; color:white; text-align:center; padding:8px; border-radius:6px; text-decoration:none; margin:10px auto; width:220px; font-weight:bold; }
+  h2 { color:#ffcc00; margin-top:20px; }
+  ul { list-style:none; padding:0; }
+  li { display:flex; align-items:center; gap:10px; margin-bottom:10px; background:#2a2a2a; padding:8px; border-radius:6px; }
+  img { width:50px; height:50px; border-radius:6px; object-fit:cover; }
+  .item-name { flex:1; }
+  .item-price { background:#ffcc00; color:#1a1a1a; padding:2px 6px; border-radius:8px; }
+  .order-btn { background:#25D366; color:white; padding:4px 8px; border-radius:6px; text-decoration:none; font-size:0.8rem; }
+</style>
+</head>
+<body>
+
+<h1>QR Меню Тест</h1>
+<a id="call-btn-header" target="_blank">Вызвать официанта</a>
+
+<div id="menu-container"></div>
+
+<script>
+const sheetID = "1q6A9g5LvjZnlSl1I697UJt1kBiVPy2j4p7YwEQS3I3U"; // твоя Google Таблица
+const sheetName = "Лист1";
+const query = encodeURIComponent("select A, B, C, D, E, F");
+const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?sheet=${sheetName}&tq=${query}`;
+
+// Функция для конвертации ответа gviz в JSON
+function gvizToJson(gvizText) {
+    const jsonText = gvizText.match(/google\.visualization\.Query\.setResponse\(([\s\S\w]+)\)/)[1];
+    return JSON.parse(jsonText);
+}
+
+fetch(url)
+  .then(res => res.text())
+  .then(rep => {
+    const data = gvizToJson(rep);
+    const container = document.getElementById("menu-container");
+    const categories = {};
+    let callPhone = "";
+
+    // Группируем по категориям и берем только 1 блюдо на категорию
+    data.table.rows.forEach(row => {
+      const img = row.c[0]?.v;
+      const name = row.c[1]?.v;
+      const price = row.c[2]?.v;
+      const category = row.c[3]?.v;
+      const phoneOrder = row.c[4]?.v;
+      const phoneCall = row.c[5]?.v;
+
+      if (!callPhone && phoneCall) callPhone = phoneCall; // первый номер для кнопки вызова
+
+      if (!categories[category]) categories[category] = [];
+      if (categories[category].length < 1) { // только 1 блюдо на категорию для теста
+        categories[category].push({img, name, price, phoneOrder});
+      }
+    });
+
+    // Устанавливаем ссылку кнопки вызова официанта
+    const callBtnHeader = document.getElementById("call-btn-header");
+    callBtnHeader.href = `https://wa.me/${callPhone}?text=Прошу вызвать официанта к столику №`;
+
+    // Отрисовываем категории
+    Object.keys(categories).forEach(cat => {
+      const h2 = document.createElement("h2");
+      h2.textContent = cat;
+      container.appendChild(h2);
+
+      const ul = document.createElement("ul");
+      categories[cat].forEach(item => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <img src="${item.img}">
+          <span class="item-name">${item.name}</span>
+          <span class="item-price">${item.price} c</span>
+          <a class="order-btn" target="_blank" href="https://wa.me/${item.phoneOrder}?text=Хочу заказать: ${encodeURIComponent(item.name)}">Заказать</a>
+        `;
+        ul.appendChild(li);
+      });
+      container.appendChild(ul);
+    });
+  })
+  .catch(err => {
+    console.error("Ошибка при загрузке меню:", err);
+    const container = document.getElementById("menu-container");
+    container.innerHTML = "<p>Не удалось загрузить меню. Проверьте публикацию таблицы.</p>";
+  });
+</script>
+
+</body>
+</html>
