@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR Меню с Корзиной</title>
+<style>
+body { 
+    font-family: Arial, sans-serif; 
+    background: #1a1a1a; 
+    color: white; 
+    padding: 10px; 
+    margin: 0; 
+    max-width: 100%;
+    overflow-x: hidden;
+}
+h1 { 
+    text-align: center; 
+    color: #ffcc00; 
+    margin-bottom: 10px; 
+    font-size: 1.8rem;
+}
+#call-btn-header { 
+    display: block; 
+    background: #ff9900; 
+    color: white; 
+    text-align: center; 
+    padding: 12px; 
+    border-radius: 6px; 
+    text-decoration: none; 
+    margin: 10px auto; 
+    width: 90%;
+    max-width: 280px;
+    font-weight: bold; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+h2 { 
+    color: #ffcc00; 
+    margin-top: 25px;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #444;
+}
+ul { 
+    list-style: none; 
+    padding: 0; 
+    margin: 0;
+}
+li { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    margin-bottom: 15px; 
+    background: #2a2a2a; 
+    padding: 12px; 
+    border-radius: 8px; 
+    opacity: 0; 
+    transform: translateY(20px); 
+    transition: all 0.3s ease; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+li.show { 
+    opacity: 1; 
+    transform: translateY(0); 
+}
+img { 
+    width: 60px; 
+    height: 60px; 
+    border-radius: 8px; 
+    object-fit: cover;
+    background: #333;
+    flex-shrink: 0;
+}
+.item-info {
+    flex: 1;
+    min-width: 0;
+}
+.item-name { 
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.item-price { 
+    background: #ffcc00; 
+    color: #1a1a1a; 
+    padding: 4px 10px; 
+    border-radius: 12px; 
+    font-weight: bold;
+    font-size: 0.9rem;
+    display: inline-block;
+}
+.add-btn, .remove-btn, .plus-btn, .minus-btn, #clear-cart { 
+    padding: 6px 10px; 
+    border-radius: 6px; 
+    text-decoration: none; 
+    font-size: 0.9rem; 
+    cursor: pointer; 
+    border: none;
+    transition: all 0.2s;
+}
+.add-btn, .plus-btn { 
+    background: #25D366; 
+    color: white; 
+    font-weight: bold; 
+    width: 36px; 
+    height: 36px; 
+    line-height: 24px; 
+    text-align: center; 
+}
+.add-btn:hover, .plus-btn:hover {
+    background: #20bd5c;
+    transform: scale(1.05);
+}
+.remove-btn, .minus-btn, #clear-cart { 
+    background: #ff4d4d; 
+    color: white; 
+    cursor: pointer; 
+    border-radius: 6px; 
+    padding: 6px 12px; 
+}
+.remove-btn:hover, .minus-btn:hover, #clear-cart:hover {
+    background: #ff3333;
+}
+#cart { 
+    margin-top: 25px; 
+    padding: 15px; 
+    background: #2a2a2a; 
+    border-radius: 10px; 
+    opacity: 0; 
+    transition: opacity 0.5s; 
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    position: sticky;
+    bottom: 10px;
+    z-index: 100;
+}
+#cart.show { 
+    opacity: 1; 
+}
+#cart-items li { 
+    justify-content: space-between; 
+    margin-bottom: 12px;
+}
+.cart-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.cart-item-quantity {
+    min-width: 25px;
+    text-align: center;
+    font-weight: bold;
+}
+#send-order { 
+    display: block; 
+    margin-top: 15px; 
+    padding: 12px; 
+    background: #25D366; 
+    color: white; 
+    text-align: center; 
+    border-radius: 6px; 
+    text-decoration: none; 
+    font-weight: bold; 
+    transition: background 0.2s;
+}
+#send-order:hover {
+    background: #20bd5c;
+}
+#clear-cart {
+    margin-top: 12px;
+    width: 100%;
+    padding: 10px;
+}
+#loading { 
+    text-align: center; 
+    margin: 40px 0; 
+}
+.spinner {
+  border: 6px solid #2a2a2a;
+  border-top: 6px solid #ffcc00;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: 50px auto;
+}
+@keyframes spin { 
+    100% { transform: rotate(360deg); } 
+}
+.empty-cart {
+    text-align: center;
+    padding: 20px;
+    color: #999;
+}
+.error-message {
+    text-align: center;
+    color: #ff4d4d;
+    padding: 20px;
+}
+.menu-category {
+    margin-bottom: 30px;
+}
+@media (max-width: 480px) {
+    body {
+        padding: 8px;
+    }
+    h1 {
+        font-size: 1.5rem;
+    }
+    li {
+        padding: 10px;
+    }
+    img {
+        width: 50px;
+        height: 50px;
+    }
+}
+</style>
+</head>
+<body>
+
+<h1>QR Меню Тест</h1>
+<a id="call-btn-header" target="_blank">Вызвать официанта</a>
+<div id="loading"><div class="spinner"></div></div>
+<div id="menu-container" style="display:none;"></div>
+
+<div id="cart" style="display:none;">
+  <h2>Корзина</h2>
+  <ul id="cart-items"></ul>
+  <p>Сумма: <span id="cart-total">0</span> c</p>
+  <a id="send-order" target="_blank">Отправить заказ в WhatsApp</a>
+  <button id="clear-cart">Очистить корзину</button>
+</div>
+
+<script>
+const sheetID = "1q6A9g5LvjZnlSl1I697UJt1kBiVPy2j4p7YwEQS3I3U"; 
+const sheetName = "Лист1";
+const query = encodeURIComponent("select A, B, C, D, E, F");
+const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?sheet=${sheetName}&tq=${query}`;
+
+let cart = [];
+let orderPhone = "";
+let callPhone = "";
+
+function gvizToJson(gvizText) {
+    const jsonText = gvizText.match(/google\.visualization\.Query\.setResponse\(([\s\S\w]+)\)/)[1];
+    return JSON.parse(jsonText);
+}
+
+function updateCartUI() {
+    const cartContainer = document.getElementById("cart");
+    const cartItems = document.getElementById("cart-items");
+    const cartTotal = document.getElementById("cart-total");
+    cartItems.innerHTML = "";
+    let total = 0;
+
+    if (cart.length === 0) {
+        cartItems.innerHTML = '<div class="empty-cart">Корзина пуста</div>';
+        cartContainer.style.display = "none";
+        return;
+    }
+
+    cart.forEach((item, idx) => {
+        total += item.price * item.quantity;
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <div class="item-info">
+                <span>${item.name}</span>
+                <div>${item.price} c × ${item.quantity} = ${item.price * item.quantity} c</div>
+            </div>
+            <div class="cart-item-controls">
+                <button class="minus-btn">➖</button>
+                <span class="cart-item-quantity">${item.quantity}</span>
+                <button class="plus-btn">➕</button>
+            </div>
+        `;
+        cartItems.appendChild(li);
+
+        li.querySelector(".plus-btn").addEventListener("click", () => {
+            item.quantity++;
+            updateCartUI();
+        });
+        li.querySelector(".minus-btn").addEventListener("click", () => {
+            item.quantity--;
+            if (item.quantity <= 0) {
+                if (confirm("Удалить товар из корзины?")) {
+                    cart.splice(idx, 1);
+                } else {
+                    item.quantity = 1;
+                }
+            }
+            updateCartUI();
+        });
+    });
+
+    cartTotal.textContent = total;
+    cartContainer.style.display = "block";
+    setTimeout(() => cartContainer.classList.add('show'), 50);
+
+    const sendOrderBtn = document.getElementById("send-order");
+    const itemsText = cart.map(i => `${i.quantity} x ${i.name} (${i.price * i.quantity} c)`).join(", ");
+    const totalText = `Общая сумма: ${total} c`;
+    sendOrderBtn.href = `https://wa.me/${orderPhone}?text=Заказ:%0A${encodeURIComponent(itemsText)}%0A%0A${encodeURIComponent(totalText)}%0A%0AНомер столика:`;
+}
+
+// Добавление в корзину из меню
+function addToCart(item) {
+    const existing = cart.find(i => i.name === item.name);
+    if (existing) {
+        existing.quantity++;
+    } else {
+        cart.push({...item, quantity: 1});
+    }
+    updateCartUI();
+    
+    // Показать анимацию добавления
+    const cartContainer = document.getElementById("cart");
+    cartContainer.classList.remove('show');
+    setTimeout(() => cartContainer.classList.add('show'), 10);
+}
+
+// Очистка корзины
+document.getElementById("clear-cart").addEventListener("click", () => {
+    if (cart.length > 0 && confirm("Очистить корзину?")) {
+        cart = [];
+        updateCartUI();
+    }
+});
+
+// Загрузка меню из Google Sheets
+fetch(url)
+  .then(res => res.text())
+  .then(rep => {
+    const data = gvizToJson(rep);
+    const container = document.getElementById("menu-container");
+    const loading = document.getElementById("loading");
+    const categories = {};
+
+    data.table.rows.forEach(row => {
+      const img = row.c[0]?.v || '';
+      const name = row.c[1]?.v;
+      const price = row.c[2]?.v;
+      const category = row.c[3]?.v || 'Без категории';
+      const phoneOrderValue = row.c[4]?.v;
+      const phoneCallValue = row.c[5]?.v;
+
+      // Сохраняем телефоны из первой непустой строки
+      if (phoneCallValue && !callPhone) callPhone = phoneCallValue;
+      if (phoneOrderValue && !orderPhone) orderPhone = phoneOrderValue;
+
+      if (!categories[category]) categories[category] = [];
+      categories[category].push({img, name, price});
+    });
+
+    // Устанавливаем ссылку для вызова официанта
+    const callBtnHeader = document.getElementById("call-btn-header");
+    if (callPhone) {
+      callBtnHeader.href = `https://wa.me/${callPhone}?text=Прошу вызвать официанта к столику №`;
+    } else {
+      callBtnHeader.style.display = 'none';
+    }
+
+    // Создаем элементы меню
+    Object.keys(categories).forEach(cat => {
+      const categoryDiv = document.createElement("div");
+      categoryDiv.className = "menu-category";
+      
+      const h2 = document.createElement("h2");
+      h2.textContent = cat;
+      categoryDiv.appendChild(h2);
+
+      const ul = document.createElement("ul");
+      categories[cat].forEach((item, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <img src="${item.img}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgdmlld0JveD0iMCAwIDYwIDYwIiBmaWxsPSJub25lIj48cmVjdCB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIGZpbGw9IiMzMzMiIHJ4PSI4Ii8+PHBhdGggZD0iTTM1IDI1SDI1VjM1SDM1VjI1WiIgZmlsbD0iI2ZmZmZmZiIvPjxwYXRoIGQ9Ik0zMCA0MEMzMy44NjYgNDAgMzcgMzYuODY2IDM3IDMzQzM3IDI5LjEzNCAzMy44NjYgMjYgMzAgMjZDMjYuMTM0IDI2IDIzIDI5LjEzNCAyMyAzM0MyMyAzNi44NjYgMjYuMTM0IDQwIDMwIDQwWiIgZmlsbD0iI2ZmZmZmZiIvPjwvc3ZnPg=='">
+          <div class="item-info">
+            <span class="item-name">${item.name}</span>
+            <span class="item-price">${item.price} c</span>
+          </div>
+          <button class="add-btn">➕</button>
+        `;
+        ul.appendChild(li);
+
+        li.querySelector(".add-btn").addEventListener("click", () => {
+          addToCart(item);
+        });
+
+        setTimeout(() => li.classList.add('show'), 50 + index * 100);
+      });
+      categoryDiv.appendChild(ul);
+      container.appendChild(categoryDiv);
+    });
+
+    loading.style.display = "none";
+    container.style.display = "block";
+  })
+  .catch(err => {
+    console.error("Ошибка при загрузке меню:", err);
+    const container = document.getElementById("menu-container");
+    const loading = document.getElementById("loading");
+    loading.style.display = "none";
+    container.innerHTML = "<div class='error-message'>Не удалось загрузить меню. Пожалуйста, попробуйте позже.</div>";
+    container.style.display = "block";
+  });
+</script>
+
+</body>
+</html>
