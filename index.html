@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRO BURGER — QR Menu</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- 🔝 Шапка -->
+  <header class="topbar">
+    <div class="logo">
+      <img src="img/logo.png" alt="PRO BURGER">
+    </div>
+    <h1>PRO BURGER</h1>
+  </header>
+
+  <!-- 🍔 Меню -->
+  <main class="container">
+
+    <!-- ================= БУРГЕРЫ ================= -->
+    <h2 class="section">Бургеры</h2>
+    <div class="grid">
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Pro бургер</div></div><div class="right"><div class="price">27 c</div><button class="add" onclick="addToCart('Pro бургер',27)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Big бургер XL</div></div><div class="right"><div class="price">29 c</div><button class="add" onclick="addToCart('Big бургер XL',29)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Big бургер XXL</div></div><div class="right"><div class="price">39 c</div><button class="add" onclick="addToCart('Big бургер XXL',39)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Чизбургер</div></div><div class="right"><div class="price">24 c</div><button class="add" onclick="addToCart('Чизбургер',24)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Куриный бургер</div></div><div class="right"><div class="price">20 c</div><button class="add" onclick="addToCart('Куриный бургер',20)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Бургер & Фри</div></div><div class="right"><div class="price">26 c</div><button class="add" onclick="addToCart('Бургер & Фри',26)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Гамбургер</div></div><div class="right"><div class="price">20 c</div><button class="add" onclick="addToCart('Гамбургер',20)"><i class="fa-solid fa-plus"></i></button></div></div>
+    </div>
+
+    <!-- ================= ПИЦЦА ================= -->
+    <h2 class="section">Пицца</h2>
+    <div class="grid">
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Маргарита</div></div><div class="right"><div class="price">40 c</div><button class="add" onclick="addToCart('Пицца Маргарита',40)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Пепперони</div></div><div class="right"><div class="price">40 c</div><button class="add" onclick="addToCart('Пицца Пепперони',40)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Четыре сезона</div></div><div class="right"><div class="price">60 c</div><button class="add" onclick="addToCart('Пицца Четыре сезона',60)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Четыре сыра</div></div><div class="right"><div class="price">50 c</div><button class="add" onclick="addToCart('Пицца Четыре сыра',50)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Барбекю</div></div><div class="right"><div class="price">55 c</div><button class="add" onclick="addToCart('Пицца Барбекю',55)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Деревенская</div></div><div class="right"><div class="price">50 c</div><button class="add" onclick="addToCart('Пицца Деревенская',50)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Кантри</div></div><div class="right"><div class="price">50 c</div><button class="add" onclick="addToCart('Пицца Кантри',50)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Мясная</div></div><div class="right"><div class="price">50 c</div><button class="add" onclick="addToCart('Пицца Мясная',50)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Ассорти</div></div><div class="right"><div class="price">60 c</div><button class="add" onclick="addToCart('Пицца Ассорти',60)"><i class="fa-solid fa-plus"></i></button></div></div>
+    </div>
+
+    <!-- ================= ХОТ-ДОГИ (говядина) ================= -->
+    <h2 class="section">Хот-доги (говядина)</h2>
+    <div class="grid">
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Хот-дог «Турецкий»</div></div><div class="right"><div class="price">16 c</div><button class="add" onclick="addToCart('Хот-дог Турецкий',16)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Хот-дог «Köfte»</div></div><div class="right"><div class="price">20 c</div><button class="add" onclick="addToCart('Хот-дог Köfte',20)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Хот-дог «Королевский»</div></div><div class="right"><div class="price">16 c</div><button class="add" onclick="addToCart('Хот-дог Королевский',16)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Хот-дог «Тайский»</div></div><div class="right"><div class="price">15 c</div><button class="add" onclick="addToCart('Хот-дог Тайский',15)"><i class="fa-solid fa-plus"></i></button></div></div>
+    </div>
+
+    <!-- ================= ХОТ-ДОГИ (куриные) ================= -->
+    <h2 class="section">Хот-доги (куриные)</h2>
+    <div class="grid">
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Хот-дог «Французский»</div></div><div class="right"><div class="price">14 c</div><button class="add" onclick="addToCart('Хот-дог Французский',14)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Хот-дог с сыром</div></div><div class="right"><div class="price">14 c</div><button class="add" onclick="addToCart('Хот-дог с сыром',14)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Хот-дог «Сальса»</div></div><div class="right"><div class="price">14 c</div><button class="add" onclick="addToCart('Хот-дог Сальса',14)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Хот-дог «Начо»</div></div><div class="right"><div class="price">14 c</div><button class="add" onclick="addToCart('Хот-дог Начо',14)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Хот-дог «Чикен»</div></div><div class="right"><div class="price">12 c</div><button class="add" onclick="addToCart('Хот-дог Чикен',12)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Хот-дог «Классический»</div></div><div class="right"><div class="price">7 c</div><button class="add" onclick="addToCart('Хот-дог Классический',7)"><i class="fa-solid fa-plus"></i></button></div></div>
+    </div>
+
+    <!-- ================= БУРРИТО ================= -->
+    <h2 class="section">Буррито</h2>
+    <div class="grid">
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Pro буррито</div></div><div class="right"><div class="price">30 c</div><button class="add" onclick="addToCart('Pro буррито',30)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Буррито с аджи XL (говядина)</div></div><div class="right"><div class="price">25 c</div><button class="add" onclick="addToCart('Буррито с аджи XL',25)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Буррито с аджи XXL (говядина)</div></div><div class="right"><div class="price">30 c</div><button class="add" onclick="addToCart('Буррито с аджи XXL',30)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Буррито с картофелем фри (курица)</div></div><div class="right"><div class="price">18 c</div><button class="add" onclick="addToCart('Буррито с картофелем фри',18)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Буррито (курица)</div></div><div class="right"><div class="price">19 c</div><button class="add" onclick="addToCart('Буррито курица',19)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Буррито с соусом сальса</div></div><div class="right"><div class="price">20 c</div><button class="add" onclick="addToCart('Буррито с сальсой',20)"><i class="fa-solid fa-plus"></i></button></div></div>
+    </div>
+
+    <!-- ================= ЗАКУСКИ ================= -->
+    <h2 class="section">Закуски и гарниры</h2>
+    <div class="grid">
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Куриные крылышки (5 шт.)</div></div><div class="right"><div class="price">22 c</div><button class="add" onclick="addToCart('Крылышки 5 шт.',22)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Наггетсы (200 г)</div></div><div class="right"><div class="price">20 c</div><button class="add" onclick="addToCart('Наггетсы 200 г',20)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Картофель фри (200 г)</div></div><div class="right"><div class="price">15 c</div><button class="add" onclick="addToCart('Фри 200 г',15)"><i class="fa-solid fa-plus"></i></button></div></div>
+    </div>
+
+    <!-- ================= НАПИТКИ ================= -->
+    <h2 class="section">Горячие и холодные напитки</h2>
+    <div class="grid">
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Pepsi cola (0.5)</div></div><div class="right"><div class="price">7 c</div><button class="add" onclick="addToCart('Pepsi 0.5',7)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Fanta (0.5)</div></div><div class="right"><div class="price">7 c</div><button class="add" onclick="addToCart('Fanta 0.5',7)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Сок "Добрый" (1л)</div></div><div class="right"><div class="price">19 c</div><button class="add" onclick="addToCart('Сок Добрый 1л',19)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Кофе</div></div><div class="right"><div class="price">3 c</div><button class="add" onclick="addToCart('Кофе',3)"><i class="fa-solid fa-plus"></i></button></div></div>
+      <div class="card"><div class="thumb"></div><div class="info"><div class="name">Чай</div></div><div class="right"><div class="price">1 c</div><button class="add" onclick="addToCart('Чай',1)"><i class="fa-solid fa-plus"></i></button></div></div>
+    </div>
+
+  </main>
+
+ <!-- 🛒 Корзина -->
+  <aside class="cart">
+    <h2>Корзина</h2>
+    <div id="cart-items"></div>
+    <div class="total">Итого: <span id="cart-total">0</span> c</div>
+    <button class="clear" onclick="clearCart()">Очистить</button>
+    <button class="whatsapp" onclick="sendToWhatsApp()">Заказать в WhatsApp</button>
+  </aside>
+
+  <script src="script.js"></script>
+</body>
+</html>
