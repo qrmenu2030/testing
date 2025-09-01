@@ -61,7 +61,8 @@ body {
    Меню и карточки
 ================================= */
 .container {
-  padding: 16px;
+  padding:16px;
+  padding-bottom:200px; /* место под корзину */
 }
 
 .section {
